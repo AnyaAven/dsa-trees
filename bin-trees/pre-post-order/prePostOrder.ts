@@ -4,7 +4,13 @@ import { BNodeNum } from "../common/bintree";
  * Returns an array of values of visited nodes. */
 
 function preOrder(node: BNodeNum | null): number[] {
-  return [42];
+  if (node === null) return [];
+  const vals = [node.val];
+
+  vals.push(...preOrder(node.lnode));
+  vals.push(...preOrder(node.rnode));
+
+  return vals;
 }
 
 
@@ -12,7 +18,16 @@ function preOrder(node: BNodeNum | null): number[] {
  * Returns an array of values of visited nodes. */
 
 function postOrder(node: BNodeNum | null): number[] {
-  return [42];
+  if (node === null) return [];
+
+  const vals: number[] = [];
+
+  vals.push(...postOrder(node.lnode));
+  vals.push(...postOrder(node.rnode));
+  vals.push(node.val);
+
+  return vals;
 }
+
 
 export { preOrder, postOrder };
