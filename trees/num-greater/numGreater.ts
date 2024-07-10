@@ -4,7 +4,7 @@ import { TreeNodeNum } from "../common/tree";
  * through its children, return a count of the number of nodes whose value
  * is greater than lowerBound. */
 
-function numGreater(node: TreeNodeNum, lowerBound: number): number {
+function numGreaterLoop(node: TreeNodeNum, lowerBound: number): number {
   let count = 0;
 
   const toVisit = [node];
@@ -17,6 +17,16 @@ function numGreater(node: TreeNodeNum, lowerBound: number): number {
     for(const child of current.children){
       toVisit.push(child);
     }
+  }
+  return count;
+}
+
+function numGreater(node: TreeNodeNum, lowerBound: number): number {
+  if(node.children.length === 0) return node.val > lowerBound? 1: 0
+
+  let count = node.val > lowerBound? 1: 0;
+  for(const child of node.children){
+    count += numGreater(child, lowerBound)
   }
   return count;
 }
